@@ -1,0 +1,41 @@
+name: Import Open Camera Source
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: true
+
+      - name: Import Open Camera
+        shell: bash
+        run: |
+          set -euo pipefail
+          tmp="$(mktemp -d)"
+          git clone --depth 1 --branch master https://github.com/almalence/opencamera.git "$tmp/opencamera"
+
+          shopt -s dotglob nullglob
+          for item in * .[^.]*; do
+            case "$item" in
+              .git|.github) ;;
+              *) rm -rf -- "$item" ;;
+            esac
+          done
+
+          cp -a "$tmp/opencamera"/. .
+          rm -rf "$tmp"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Import Open Camera source [skip ci]" || echo "No changes to commit"
+          git push origin HEAD:main
