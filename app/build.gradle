@@ -1,0 +1,47 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.almalence.opencam'
+    compileSdk 34
+    ndkVersion '17.2.4988734'
+
+    defaultConfig {
+        applicationId 'com.almalence.opencam'
+        minSdk 21
+        targetSdk 28
+        versionCode 146
+        versionName '3.52'
+
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            jni.srcDirs = []
+        }
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path file('jni/Android.mk')
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_8
+        targetCompatibility JavaVersion.VERSION_8
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
