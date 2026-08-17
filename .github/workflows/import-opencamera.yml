@@ -2,15 +2,12 @@ name: Import Open Camera Source
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
 
 permissions:
   contents: write
 
 jobs:
   import:
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout target repository
@@ -19,7 +16,7 @@ jobs:
           fetch-depth: 1
           persist-credentials: true
 
-      - name: Import Open Camera
+      - name: Import Open Camera source
         shell: bash
         run: |
           set -euo pipefail
