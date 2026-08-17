@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# Minimal Gradle launcher. The CI workflow uses the installed Gradle distribution.
-set -e
-exec gradle "$@"
