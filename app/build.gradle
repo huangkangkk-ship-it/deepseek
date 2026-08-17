@@ -4,6 +4,7 @@ plugins {
 }
 android {
     compileSdk 34
+    namespace 'com.yourname.gtneo2camera'
     defaultConfig {
         applicationId "com.yourname.gtneo2camera"
         minSdk 21
